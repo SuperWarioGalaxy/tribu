@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Echos | Home{% endblock title %}
+{% block body %}
+  <a href="{% url 'echos:add-echo'%}">Create an Echo Here</a> 
+  <a href="{% url 'logout' %}">Logout</a>
+  <ul>
+    {%for echo in echos%}
+    <li>
+      <p>Echo: {{echo.pk}} User: {{echo.user}}</p>  
+      <p>{{echo.content | truncatewords:20}}</p> 
+      <a href="{% url 'echos:echos-detail' echo.pk %}"><button>Details</button></a>
+    </li>
+    {% endfor %}
+  </ul>
+{% endblock body %}

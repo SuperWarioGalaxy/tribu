@@ -1,0 +1,12 @@
+{% extends "./base.html" %}
+{% block title %}Task | Creation{% endblock title %}
+{% block body %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" href="{% url 'echos:echos-list' %}">Create</button>
+  </form>
+
+  <a href="{% url 'echos:echos-list' %}">Back</a> 
+{% endblock body %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Echo | {{echo.id}}{% endblock title %}
+{% block body %}
+<table>
+  <p>Content: {{echo.content}}</p>
+  <p>Created at: {{echo.created_at}}</p>
+  <p>Updates at: {{echo.updated_at}}</p>
+  <p>Creator: {{echo.user}}</p>
+  <a href="{%url 'echos:echos-list'%}">Back</a>
+</table>
+{%for wave in waves%}
+    <li>
+      <p>Wave: {{wave.pk}} User: {{wave.user}}</p>  
+      <p>{{wave.content}}</p> 
+    </li>
+{% endfor %}
+{% endblock body %}
