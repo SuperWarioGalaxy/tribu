@@ -7,6 +7,10 @@
   <p>Updates at: {{echo.updated_at}}</p>
   <p>Creator: {{echo.user}}</p>
   <a href="{%url 'echos:echos-list'%}">Back</a>
+  {% if echo.user == request.user %}
+    <a href="{% url 'echos:echo-edit' echo.pk %}">Edit</a>
+  {% endif %}
+  
 </table>
 {%for wave in waves%}
     <li>
@@ -14,4 +18,7 @@
       <p>{{wave.content}}</p> 
     </li>
 {% endfor %}
+{% if more %}
+<a href="{% url 'echos:echo-waves' echo.pk %}"><button>Show More</button></a>
+{% endif %}
 {% endblock body %}
