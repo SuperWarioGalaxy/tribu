@@ -22,7 +22,7 @@ from django.urls import include, path
 import accounts.views
 
 urlpatterns = [
-    path('', lambda request: redirect('echos/', permanent=False)),
+    path('', lambda request: redirect('login/', permanent=False)),
     path('admin/', admin.site.urls),
     path('login/', accounts.views.user_login, name='login'),
     path('logout/', accounts.views.user_logout, name='logout'),

@@ -32,7 +32,7 @@ def echo_detail(request: HttpRequest, pk: int) -> HttpResponse:
 @login_required
 def echo_waves(request: HttpRequest, pk: int) -> HttpResponse:
     echo = Echo.objects.get(pk=pk)
-    waves = echo.waves.all()
+    waves = echo.waves.all().order_by('-created_at')
     more = False
     return render(request, 'detail.html', dict(echo=echo, waves=waves, more=more))
 
@@ -50,6 +50,7 @@ def add_echo(request):
     return render(request, 'add_echo.html', dict(form=form))
 
 
+@login_required
 def echo_edit(request, pk: int):
     echo = Echo.objects.get(pk=pk)
     if echo.user != request.user:
@@ -58,7 +59,6 @@ def echo_edit(request, pk: int):
         if request.method == 'POST':
             if (form := EditEchoForm(request.POST, instance=echo)).is_valid():
                 echo = form.save(commit=False)
-                # echo.slug = slugify(task.name)
                 echo.save()
                 return redirect('echos:echos-list')
         else:
@@ -66,5 +66,18 @@ def echo_edit(request, pk: int):
         return render(request, 'edit.html', dict(echo=echo, form=form))
 
 
-def echo_delete():
-    pass
+@login_required
+def echo_delete(request, pk: int):
+    echo = Echo.objects.get(pk=pk)
+    if echo.user != request.user:
+        raise PermissionDenied
+    else:
+        Echo.objects.filter(pk=pk).delete()
+        echos = Echo.objects.all()
+        return render(
+            request,
+            'list.html',
+            {
+                'echos': echos,
+            },
+        )

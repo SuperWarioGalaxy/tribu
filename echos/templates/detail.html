@@ -9,7 +9,9 @@
   <a href="{%url 'echos:echos-list'%}">Back</a>
   {% if echo.user == request.user %}
     <a href="{% url 'echos:echo-edit' echo.pk %}">Edit</a>
+    <a href="{% url 'echos:echo-delete' echo.pk %}">Delete</a>
   {% endif %}
+  <a href="{%url 'echos:add-wave' echo.pk%}">Add Wave</a>
   
 </table>
 {%for wave in waves%}
